@@ -1,0 +1,1355 @@
+{
+	"info": {
+		"_postman_id": "819a3dd1-7a67-4d5f-8488-f14ab217e63e",
+		"name": "SCA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1276990"
+	},
+	"item": [
+		{
+			"name": "Assunto",
+			"item": [
+				{
+					"name": "/subject",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_evento\": 25,\r\n    \"nm_assunto\": \"TesteUser\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/subject",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"subject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/subject",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/subject?id_evento=31&id_assunto=7",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"subject"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "31"
+								},
+								{
+									"key": "nm_assunto",
+									"value": "TesteUser",
+									"disabled": true
+								},
+								{
+									"key": "id_assunto",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/subject",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_evento\": 31,\r\n    \"id_assunto\": 7,\r\n    \"nm_assunto\": \"TESTE DE WEBSOCKET\",\r\n    \"nm_status\": \"Andamento\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/subject",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"subject"
+							],
+							"query": [
+								{
+									"key": "nm_assunto",
+									"value": "TesteUser",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/subject",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/subject?id_assunto=33&id_evento=33",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"subject"
+							],
+							"query": [
+								{
+									"key": "id_assunto",
+									"value": "33"
+								},
+								{
+									"key": "id_evento",
+									"value": "33"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Assembleia",
+			"item": [
+				{
+					"name": "/events",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nm_evento\": \"TESTE DATA SERVER xxxxxx\",\r\n    \"dt_evento\": \"20/06/2024\",\r\n    \"nm_local\": \"Matriz - GXP xxxxxx\",\r\n    \"dt_corte\": \"20/04/2024\",\r\n    \"dt_primeira_chamada\": \"13:00:00\",\r\n    \"dt_segunda_chamada\": \"14:00:00\",\r\n    \"dt_terceira_chamada\": \"15:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/events",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/events",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_evento\": 1,\r\n    \"nm_evento\": \"FEMAGRI 2023\",\r\n    \"dt_evento\": \"20/12/2023\",\r\n    \"nm_local\": \"Matriz\",\r\n    \"dt_corte\": \"29/06/2023\",\r\n    \"nm_status\": \"ANDAMENTO\",\r\n    \"dt_primeira_chamada\": \"13:00:00\",\r\n    \"dt_segunda_chamada\": \"14:00:00\",\r\n    \"dt_terceira_chamada\": \"15:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/events",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/events",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/events",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"events"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ANDAMENTO",
+									"description": "opcional ",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Etiquetas",
+			"item": [
+				{
+					"name": "/tag/cooperado",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf_cnpj\": \"037.577.496-34\",\r\n    \"id_evento\": 34,\r\n    \"cd_matricula\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/tag/cooperado",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"tag",
+								"cooperado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tag/copy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf_cnpj\": \"05302837609\",\r\n    \"id_evento\": 1,\r\n    \"tipo\": \"socio\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/tag/copy",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"tag",
+								"copy"
+							]
+						},
+						"description": "Imprime segunda via de etiqueta\n\nTipo: COOPERADO | SOCIO | FAMILIAR | VISITANTE | REPRESENTANTE\n\nEndFragm"
+					},
+					"response": []
+				},
+				{
+					"name": "/tag/partner",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf_cnpj_socio\": \"552.097.426-87\",\r\n    \"id_evento\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/tag/partner",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"tag",
+								"partner"
+							]
+						},
+						"description": "Cria etiqueta para sócio ou familiar:\n\n> **tipo:** socio | familiar\n> \n> **cpf_cnpj_cooperado:** deve ser informado quando o tipo de etiqueta for familiar\n> \n> **nm_socio_familiar**: deve ser informado quando o tipo de etiqueta for familiar"
+					},
+					"response": []
+				},
+				{
+					"name": "/tag/familiar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf_cnpj_cooperado\": \"001.366.336-41\",\r\n    \"nm_familiar\": \"Familiar 01\",\r\n    \"id_evento\": 36\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/tag/familiar",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"tag",
+								"familiar"
+							]
+						},
+						"description": "Cria etiqueta para sócio ou familiar:\n\n> **tipo:** socio | familiar\n> \n> **cpf_cnpj_cooperado:** deve ser informado quando o tipo de etiqueta for familiar\n> \n> **nm_socio_familiar**: deve ser informado quando o tipo de etiqueta for familiar"
+					},
+					"response": []
+				},
+				{
+					"name": "/tag/visitant",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_evento\": 36,\r\n    \"nm_visitante\": \"Visitante 5\",\r\n    \"nm_municipio\": \"Guaxupé\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/tag/visitant",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"tag",
+								"visitant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tag",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/tag?id_evento=1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"tag"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tag/report",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{endpoint}}/tag/report?id_evento=34",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"tag",
+								"report"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "34"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tag/partner",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{endpoint}}/tag/partner?cpf_cnpj=553.735.189-72",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"tag",
+								"partner"
+							],
+							"query": [
+								{
+									"key": "cpf_cnpj",
+									"value": "553.735.189-72"
+								},
+								{
+									"key": "nm_socio",
+									"value": "Osmar",
+									"disabled": true
+								},
+								{
+									"key": "cd_matricula",
+									"value": "13520",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tag/cooperado",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/tag/cooperado?id_evento=14&cpf_cnpj=678.705.978-72",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"tag",
+								"cooperado"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "14"
+								},
+								{
+									"key": "cpf_cnpj",
+									"value": "678.705.978-72"
+								},
+								{
+									"key": "nm_cooperado",
+									"value": "Maria",
+									"disabled": true
+								},
+								{
+									"key": "cd_matricula",
+									"value": "13520",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entrada",
+			"item": [
+				{
+					"name": "/entry",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf_cnpj\": \"00361432941\",\r\n    \"id_evento\": 1,\r\n    \"tipo\": \"cooperado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/entry",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"entry"
+							]
+						},
+						"description": "> **tipo:** cooperado | socio | visitante | familiar | representante"
+					},
+					"response": []
+				},
+				{
+					"name": "/entry",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{endpoint}}/entry?id_evento=1&cpf_cnpj=558.415.626-49&tipo=cooperado",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"entry"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "1"
+								},
+								{
+									"key": "cpf_cnpj",
+									"value": "558.415.626-49"
+								},
+								{
+									"key": "tipo",
+									"value": "cooperado",
+									"description": "cooperado | socio | visitante | familiar | representante"
+								}
+							]
+						},
+						"description": "> **tipo:** cooperado | socio | visitante | familiar | representante"
+					},
+					"response": []
+				},
+				{
+					"name": "/entry/history",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{endpoint}}/entry/history?id_evento=1&cpf_cnpj=558.415.626-49",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"entry",
+								"history"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "1"
+								},
+								{
+									"key": "cpf_cnpj",
+									"value": "558.415.626-49"
+								}
+							]
+						},
+						"description": "> **tipo:** cooperado | socio | visitante | familiar | representante"
+					},
+					"response": []
+				},
+				{
+					"name": "/entries",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/entries?id_evento=1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"entries"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/entry/report",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/entry/report?id_evento=1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"entry",
+								"report"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "1"
+								}
+							]
+						},
+						"description": "> **tipo:** cooperado | socio | visitante | familiar | representante"
+					},
+					"response": []
+				},
+				{
+					"name": "/entry/record-report",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/entry/record-report?id_evento=1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"entry",
+								"record-report"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "1"
+								}
+							]
+						},
+						"description": "> **tipo:** cooperado | socio | visitante | familiar | representante"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Votos",
+			"item": [
+				{
+					"name": "/vote",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/vote?id_assunto=48&cpf_cnpj=028.625.656-87&id_evento=34",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"vote"
+							],
+							"query": [
+								{
+									"key": "id_assunto",
+									"value": "48"
+								},
+								{
+									"key": "cpf_cnpj",
+									"value": "028.625.656-87"
+								},
+								{
+									"key": "id_evento",
+									"value": "34"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/vote/exception-report",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/vote/exception-report?id_evento=1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"vote",
+								"exception-report"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "1"
+								}
+							]
+						},
+						"description": "> **tipo:** cooperado | socio | visitante | familiar | representante"
+					},
+					"response": []
+				},
+				{
+					"name": "/vote/report",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/vote/report?id_evento=14&id_assunto=3",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"vote",
+								"report"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "14"
+								},
+								{
+									"key": "id_assunto",
+									"value": "3"
+								}
+							]
+						},
+						"description": "> **tipo:** cooperado | socio | visitante | familiar | representante"
+					},
+					"response": []
+				},
+				{
+					"name": "/vote/list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/vote/list?id_evento=14",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"vote",
+								"list"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "14"
+								}
+							]
+						},
+						"description": "> **tipo:** cooperado | socio | visitante | familiar | representante"
+					},
+					"response": []
+				},
+				{
+					"name": "/vote/last-upload",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{endpoint}}/vote/last-upload?id_evento=31",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"vote",
+								"last-upload"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "31"
+								}
+							]
+						},
+						"description": "> **tipo:** cooperado | socio | visitante | familiar | representante"
+					},
+					"response": []
+				},
+				{
+					"name": "/vote/download",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/vote/download?id_evento=31",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"vote",
+								"download"
+							],
+							"query": [
+								{
+									"key": "id_evento",
+									"value": "31"
+								}
+							]
+						},
+						"description": "> **tipo:** cooperado | socio | visitante | familiar | representante"
+					},
+					"response": []
+				},
+				{
+					"name": "/vote",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_evento\": 34,\r\n    \"id_assunto\": 48,\r\n    \"nr_cpf_cnpj\": \"037.577.496-34\",\r\n    \"cd_matriculas\": [\"25948\", \"13871\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/vote",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"vote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/vote/voter",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_evento\": 1,\r\n    \"nr_cpf_cnpj\": \"719.319.456-91\",\r\n    \"cd_matricula\": \"16735\", \r\n    \"nm_representante\": \"\", \r\n    \"nr_cpf_cnpj_representante\": \"\", \r\n    \"ds_justificativa\": \"Documentos apresentados\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/vote/voter",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"vote",
+								"voter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/vote/upload",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/nayarag/Desktop/vote.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/vote/upload?eventId=1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"vote",
+								"upload"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = JSON.parse(responseBody);\r",
+							"const  req = JSON.parse(pm.request.body.raw);\r",
+							"\r",
+							"const username = req.username;\r",
+							"console.info(\"username:\", username);\r",
+							"pm.collectionVariables.set(\"username\", username);\r",
+							"\r",
+							"const userToken = jsonData.access_token;\r",
+							"console.info(\"userToken:\", userToken);\r",
+							"pm.collectionVariables.set(\"token\", userToken);\r",
+							"pm.globals.set(\"token\", userToken);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"nayarag\",\r\n    \"password\": \"Cxp123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endpoint}}/login",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "endpoint",
+			"value": "https://node-dsv.cooxupe.com.br:3020",
+			"type": "string"
+		},
+		{
+			"key": "localhost",
+			"value": "https://localhost:3020",
+			"type": "string"
+		},
+		{
+			"key": "api-key",
+			"value": "O9sB9RLCUtNqcdynWHbYB11mdx+3DgOY",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": ""
+		},
+		{
+			"key": "api-key",
+			"value": "cj4w2hiex6ib788y8v4sjsjalfic9qmv",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "endpoint",
+			"value": "https://node-ho.cooxupe.com.br:3020",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}
