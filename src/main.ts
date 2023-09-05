@@ -1,27 +1,11 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as fs from 'fs';
-import * as path from 'path';
 import { AppModule } from './app.module';
 import { CustomLogger } from './logger/custom-logger.service';
 
 async function bootstrap() {
-  const httpsOptions = {
-    key: fs.readFileSync(
-      path.join(__dirname, '../cooxupe-certificate', 'myserver.key'),
-    ),
-    cert: fs.readFileSync(
-      path.join(__dirname, '../cooxupe-certificate', 'domain.crt'),
-    ),
-    ca: fs.readFileSync(
-      path.join(__dirname, '../cooxupe-certificate', 'CABundle.crt'),
-    ),
-  };
-
-  const app = await NestFactory.create(AppModule, {
-    httpsOptions,
-  });
+  const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe());
 
