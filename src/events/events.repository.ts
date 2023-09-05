@@ -24,7 +24,7 @@ export default class EventRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.listar_eventos_prc(:x_saida_json);
+          listar_eventos_prc(:x_saida_json);
         end;
         `,
         {
@@ -33,7 +33,7 @@ export default class EventRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
       this.logger.debug(`get events result: ${result.outBinds.x_saida_json}`);
@@ -60,7 +60,7 @@ export default class EventRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.criar_evento_prc(:p_nm_evento, :p_dt_evento, :p_nm_local, :p_dt_corte_votacao, :p_dt_primeira_chamada, 
+          criar_evento_prc(:p_nm_evento, :p_dt_evento, :p_nm_local, :p_dt_corte_votacao, :p_dt_primeira_chamada, 
                                                  :p_dt_segunda_chamada, :p_dt_terceira_chamada,:p_nm_usuario_criacao, :x_saida_json);
         end;
         `,
@@ -69,22 +69,16 @@ export default class EventRepository {
           p_dt_evento: newEvent.dt_evento,
           p_nm_local: newEvent.nm_local,
           p_dt_corte_votacao: newEvent.dt_corte,
-          p_dt_primeira_chamada: newEvent.dt_primeira_chamada
-            ? `${newEvent.dt_evento} ${newEvent.dt_primeira_chamada}`
-            : '',
-          p_dt_segunda_chamada: newEvent.dt_segunda_chamada
-            ? `${newEvent.dt_evento} ${newEvent.dt_segunda_chamada}`
-            : '',
-          p_dt_terceira_chamada: newEvent.dt_terceira_chamada
-            ? `${newEvent.dt_evento} ${newEvent.dt_terceira_chamada}`
-            : '',
+          p_dt_primeira_chamada: newEvent.dt_primeira_chamada ? `${newEvent.dt_evento} ${newEvent.dt_primeira_chamada}` : '',
+          p_dt_segunda_chamada: newEvent.dt_segunda_chamada ? `${newEvent.dt_evento} ${newEvent.dt_segunda_chamada}` : '',
+          p_dt_terceira_chamada: newEvent.dt_terceira_chamada ? `${newEvent.dt_evento} ${newEvent.dt_terceira_chamada}` : '',
           p_nm_usuario_criacao: username.trim(),
           x_saida_json: {
             dir: oracledb.BIND_OUT,
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 32000,
           },
-        },
+        }
       );
 
       this.logger.debug(`post events result: ${result.outBinds.x_saida_json}`);
@@ -109,7 +103,7 @@ export default class EventRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.atualizar_evento_prc(:p_id_evento, :p_nm_evento, :p_dt_evento, :p_nm_local, :p_nm_status, 
+          atualizar_evento_prc(:p_id_evento, :p_nm_evento, :p_dt_evento, :p_nm_local, :p_nm_status, 
                                                      :p_dt_corte_votacao, :p_dt_primeira_chamada, :p_dt_segunda_chamada, 
                                                      :p_dt_terceira_chamada, :p_nm_usuario_alteracao, :x_saida_json);
         end;
@@ -121,22 +115,16 @@ export default class EventRepository {
           p_nm_local: newEvent.nm_local,
           p_nm_status: newEvent.nm_status,
           p_dt_corte_votacao: newEvent.dt_corte,
-          p_dt_primeira_chamada: newEvent.dt_primeira_chamada
-            ? `${newEvent.dt_evento} ${newEvent.dt_primeira_chamada}`
-            : '',
-          p_dt_segunda_chamada: newEvent.dt_segunda_chamada
-            ? `${newEvent.dt_evento} ${newEvent.dt_segunda_chamada}`
-            : '',
-          p_dt_terceira_chamada: newEvent.dt_terceira_chamada
-            ? `${newEvent.dt_evento} ${newEvent.dt_terceira_chamada}`
-            : '',
+          p_dt_primeira_chamada: newEvent.dt_primeira_chamada ? `${newEvent.dt_evento} ${newEvent.dt_primeira_chamada}` : '',
+          p_dt_segunda_chamada: newEvent.dt_segunda_chamada ? `${newEvent.dt_evento} ${newEvent.dt_segunda_chamada}` : '',
+          p_dt_terceira_chamada: newEvent.dt_terceira_chamada ? `${newEvent.dt_evento} ${newEvent.dt_terceira_chamada}` : '',
           p_nm_usuario_alteracao: username.trim(),
           x_saida_json: {
             dir: oracledb.BIND_OUT,
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 32000,
           },
-        },
+        }
       );
 
       this.logger.debug(`put events result: ${result.outBinds.x_saida_json}`);

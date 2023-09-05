@@ -25,7 +25,7 @@ export default class EntryRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.cadastrar_entrada_visitante_prc(:p_id_evento, :p_cpf_cnpj_visitante, :p_nm_usuario, :x_retorno);
+          cadastrar_entrada_visitante_prc(:p_id_evento, :p_cpf_cnpj_visitante, :p_nm_usuario, :x_retorno);
         end;
         `,
         {
@@ -37,7 +37,7 @@ export default class EntryRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
       this.logger.debug(`entry visitante result: ${result.outBinds.x_retorno}`);
@@ -62,7 +62,7 @@ export default class EntryRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.cadastrar_entrada_prc(:p_nr_cpf_cnpj, :p_id_evento, :p_nm_usuario_criacao, :x_retorno);
+          cadastrar_entrada_prc(:p_nr_cpf_cnpj, :p_id_evento, :p_nm_usuario_criacao, :x_retorno);
         end;
         `,
         {
@@ -74,7 +74,7 @@ export default class EntryRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
       this.logger.debug(`post entry result: ${result.outBinds.x_retorno}`);
@@ -100,7 +100,7 @@ export default class EntryRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.listar_entradas_prc(:p_id_evento, :x_dados_retorno);
+          listar_entradas_prc(:p_id_evento, :x_dados_retorno);
         end;
         `,
         {
@@ -109,23 +109,17 @@ export default class EntryRepository {
             dir: oracledb.BIND_OUT,
             type: oracledb.DB_TYPE_CURSOR,
           },
-        },
+        }
       );
       const rows = await result.outBinds.x_dados_retorno.getRows();
 
       this.logger.debug(`entry list result: ${JSON.stringify(rows)}`);
 
       rows.forEach((row) => {
-        let index_row = retorno
-          .map((e) => e.nr_cpf_cnpj)
-          .indexOf(Utils.getFormattedCpfCnpj(row[4]));
+        let index_row = retorno.map((e) => e.nr_cpf_cnpj).indexOf(Utils.getFormattedCpfCnpj(row[4]));
         if (index_row > -1) {
-          retorno[index_row][
-            'cd_matricula'
-          ] = `${retorno[index_row]['cd_matricula']}, ${row[0]}`;
-          retorno[index_row]['filial'] = retorno[index_row]['filial'].includes(
-            row[3],
-          )
+          retorno[index_row]['cd_matricula'] = `${retorno[index_row]['cd_matricula']}, ${row[0]}`;
+          retorno[index_row]['filial'] = retorno[index_row]['filial'].includes(row[3])
             ? retorno[index_row]['filial']
             : `${retorno[index_row]['filial']}, ${row[3]}`;
         } else {
@@ -161,7 +155,7 @@ export default class EntryRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.busca_dados_entrada_prc(:p_tp_controle, :p_nr_cpf_cnpj, :p_id_evento, :x_saida_json);
+          busca_dados_entrada_prc(:p_tp_controle, :p_nr_cpf_cnpj, :p_id_evento, :x_saida_json);
         end;
         `,
         {
@@ -173,7 +167,7 @@ export default class EntryRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
       this.logger.debug(`get entry result: ${result.outBinds.x_saida_json}`);
@@ -198,7 +192,7 @@ export default class EntryRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.listar_hist_entradas_prc(:p_id_evento, :p_nr_cpf_cnpj, :x_dados_retorno);
+          listar_hist_entradas_prc(:p_id_evento, :p_nr_cpf_cnpj, :x_dados_retorno);
         end;
         `,
         {
@@ -208,7 +202,7 @@ export default class EntryRepository {
             dir: oracledb.BIND_OUT,
             type: oracledb.DB_TYPE_CURSOR,
           },
-        },
+        }
       );
 
       const rows = await result.outBinds.x_dados_retorno.getRows();
@@ -249,7 +243,7 @@ export default class EntryRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.relatorio_presenca_prc(:p_id_evento, :x_saida_json);
+          relatorio_presenca_prc(:p_id_evento, :x_saida_json);
         end;
         `,
         {
@@ -259,7 +253,7 @@ export default class EntryRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 10000000,
           },
-        },
+        }
       );
 
       this.logger.debug(`entry report result: ${result.outBinds.x_saida_json}`);
@@ -284,7 +278,7 @@ export default class EntryRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.relatorio_livro_prc(:p_id_evento, :x_saida_json);
+          relatorio_livro_prc(:p_id_evento, :x_saida_json);
         end;
         `,
         {
@@ -294,7 +288,7 @@ export default class EntryRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 10000000,
           },
-        },
+        }
       );
 
       this.logger.debug(`entry record report: ${result.outBinds.x_saida_json}`);
@@ -324,7 +318,7 @@ export default class EntryRepository {
             where xsep.nr_cpf_cnpj_participante = :cpf_cnpj
             and xsep.id_evento = :evento
             and xsep.dt_entrada_partic IS NOT NULL`,
-        [`${cpf_cnpj.replace(/\D/g, '')}`, eventId],
+        [`${cpf_cnpj.replace(/\D/g, '')}`, eventId]
       );
       this.logger.debug(`countEntries: ${result.rows}`);
 

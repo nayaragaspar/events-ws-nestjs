@@ -1,13 +1,7 @@
 import DatabaseService from '../database/database.service';
 import { CustomLogger } from '../logger/custom-logger.service';
 import Utils from '../utils/utils';
-import {
-  CooperadoTagDto,
-  FamiliarTagDto,
-  PartnerTagDto,
-  TagCopyDto,
-  VisitantTagDto,
-} from './tag.model';
+import { CooperadoTagDto, FamiliarTagDto, PartnerTagDto, TagCopyDto, VisitantTagDto } from './tag.model';
 
 const oracledb = require('oracledb');
 
@@ -31,7 +25,7 @@ export default class TagRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.emitir_etiqueta_coop_prc(:p_nr_cpf_cnpj, :p_id_evento, :p_nm_usuario_criacao, :p_cd_matricula, :x_saida_json);
+          emitir_etiqueta_coop_prc(:p_nr_cpf_cnpj, :p_id_evento, :p_nm_usuario_criacao, :p_cd_matricula, :x_saida_json);
         end;
         `,
         {
@@ -44,12 +38,10 @@ export default class TagRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
-      this.logger.debug(
-        `tag cooperado result: ${result.outBinds.x_saida_json}`,
-      );
+      this.logger.debug(`tag cooperado result: ${result.outBinds.x_saida_json}`);
 
       return JSON.parse(result.outBinds.x_saida_json);
     } catch (err) {
@@ -71,7 +63,7 @@ export default class TagRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.emitir_etiqueta_socio_prc(:p_nr_cpf_cnpj_socio, :p_id_evento, :p_nm_usuario_criacao, :x_saida_json);
+          emitir_etiqueta_socio_prc(:p_nr_cpf_cnpj_socio, :p_id_evento, :p_nm_usuario_criacao, :x_saida_json);
         end;
         `,
         {
@@ -83,7 +75,7 @@ export default class TagRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
       this.logger.debug(`tag sócio result: ${result.outBinds.x_saida_json}`);
@@ -108,13 +100,11 @@ export default class TagRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.emitir_etiqueta_familiar_prc(:p_nr_cpf_cnpj_familiar, :p_nr_cpf_cnpj_cooperado, :p_nm_familiar, :p_id_evento, :p_nm_usuario_criacao, :x_saida_json);
+          emitir_etiqueta_familiar_prc(:p_nr_cpf_cnpj_familiar, :p_nr_cpf_cnpj_cooperado, :p_nm_familiar, :p_id_evento, :p_nm_usuario_criacao, :x_saida_json);
         end;
         `,
         {
-          p_nr_cpf_cnpj_familiar: tag.cpf_cnpj_familiar
-            ? tag.cpf_cnpj_familiar.replace(/\D/g, '')
-            : '',
+          p_nr_cpf_cnpj_familiar: tag.cpf_cnpj_familiar ? tag.cpf_cnpj_familiar.replace(/\D/g, '') : '',
           p_nr_cpf_cnpj_cooperado: tag.cpf_cnpj_cooperado.replace(/\D/g, ''),
           p_nm_familiar: tag.nm_familiar,
           p_id_evento: tag.id_evento,
@@ -124,7 +114,7 @@ export default class TagRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
       this.logger.debug(`tag familiar result: ${result.outBinds.x_saida_json}`);
@@ -149,16 +139,14 @@ export default class TagRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.emitir_etiqueta_visitante_prc(:p_id_evento, :p_nm_visitante, :p_nr_cpf_cnpj_visitante, :p_nm_municipio_visitante, 
+          emitir_etiqueta_visitante_prc(:p_id_evento, :p_nm_visitante, :p_nr_cpf_cnpj_visitante, :p_nm_municipio_visitante, 
                                                               :p_nm_usuario_criacao, :x_saida_json);
         end;
         `,
         {
           p_id_evento: tag.id_evento,
           p_nm_visitante: tag.nm_visitante,
-          p_nr_cpf_cnpj_visitante: tag.cpf_cnpj_visitante
-            ? tag.cpf_cnpj_visitante.replace(/\D/g, '')
-            : '',
+          p_nr_cpf_cnpj_visitante: tag.cpf_cnpj_visitante ? tag.cpf_cnpj_visitante.replace(/\D/g, '') : '',
           p_nm_municipio_visitante: tag.nm_municipio,
           p_nm_usuario_criacao: username.trim(),
           x_saida_json: {
@@ -166,12 +154,10 @@ export default class TagRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
-      this.logger.debug(
-        `tag visitante result: ${result.outBinds.x_saida_json}`,
-      );
+      this.logger.debug(`tag visitante result: ${result.outBinds.x_saida_json}`);
 
       return JSON.parse(result.outBinds.x_saida_json);
     } catch (err) {
@@ -194,7 +180,7 @@ export default class TagRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.listar_etiquetas_prc(:p_id_evento, :x_dados_retorno);
+          listar_etiquetas_prc(:p_id_evento, :x_dados_retorno);
         end;
         `,
         {
@@ -203,23 +189,17 @@ export default class TagRepository {
             dir: oracledb.BIND_OUT,
             type: oracledb.DB_TYPE_CURSOR,
           },
-        },
+        }
       );
       const rows = await result.outBinds.x_dados_retorno.getRows();
 
       this.logger.debug(`tag list result: ${JSON.stringify(rows)}`);
 
       rows.forEach((row) => {
-        let index_row = retorno
-          .map((e) => e.nr_cpf_cnpj)
-          .indexOf(Utils.getFormattedCpfCnpj(row[4]));
+        let index_row = retorno.map((e) => e.nr_cpf_cnpj).indexOf(Utils.getFormattedCpfCnpj(row[4]));
         if (index_row > -1 && row[2] == 'COOPERADO') {
-          retorno[index_row][
-            'cd_matricula'
-          ] = `${retorno[index_row]['cd_matricula']}, ${row[0]}`;
-          retorno[index_row]['filial'] = retorno[index_row]['filial'].includes(
-            row[3],
-          )
+          retorno[index_row]['cd_matricula'] = `${retorno[index_row]['cd_matricula']}, ${row[0]}`;
+          retorno[index_row]['filial'] = retorno[index_row]['filial'].includes(row[3])
             ? retorno[index_row]['filial']
             : `${retorno[index_row]['filial']}, ${row[3]}`;
         } else {
@@ -245,24 +225,18 @@ export default class TagRepository {
     }
   }
 
-  async getCooperadoTag(
-    cpf_cnpj?: string,
-    nm_cooperado?: string,
-    cd_matricula?: string,
-  ) {
+  async getCooperadoTag(cpf_cnpj?: string, nm_cooperado?: string, cd_matricula?: string) {
     this.logger.debug('getCooperadoTag... ');
     let oracleConn,
       retorno = [];
 
-    const cpfOrCnpjOnlyDigits = cpf_cnpj
-      ? `${cpf_cnpj.replace(/\D/g, '')}`
-      : '';
+    const cpfOrCnpjOnlyDigits = cpf_cnpj ? `${cpf_cnpj.replace(/\D/g, '')}` : '';
     try {
       oracleConn = await this.databaseService.openPoolConnection();
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.encontrar_cooperado_prc(:p_nr_cpf_cnpj , :p_nm_cooperado, :p_cd_matricula, :x_dados_retorno);
+          encontrar_cooperado_prc(:p_nr_cpf_cnpj , :p_nm_cooperado, :p_cd_matricula, :x_dados_retorno);
         end;
         `,
         {
@@ -273,7 +247,7 @@ export default class TagRepository {
             dir: oracledb.BIND_OUT,
             type: oracledb.DB_TYPE_CURSOR,
           },
-        },
+        }
       );
       const rows = await result.outBinds.x_dados_retorno.getRows();
 
@@ -326,7 +300,7 @@ export default class TagRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.encontrar_socio_prc(:p_nr_cpf_cnpj, :p_nm_socio, :p_cd_matricula, :x_dados_retorno);
+          encontrar_socio_prc(:p_nr_cpf_cnpj, :p_nm_socio, :p_cd_matricula, :x_dados_retorno);
         end;
         `,
         {
@@ -337,7 +311,7 @@ export default class TagRepository {
             dir: oracledb.BIND_OUT,
             type: oracledb.DB_TYPE_CURSOR,
           },
-        },
+        }
       );
       const rows = await result.outBinds.x_dados_retorno.getRows();
 
@@ -363,11 +337,7 @@ export default class TagRepository {
     }
   }
 
-  async getCooperadoSocioTag(
-    id_evento: Number,
-    tipo: string,
-    cpf_cnpj: string,
-  ) {
+  async getCooperadoSocioTag(id_evento: Number, tipo: string, cpf_cnpj: string) {
     this.logger.debug('getCooperadoSocioTag...');
 
     let oracleConn;
@@ -376,7 +346,7 @@ export default class TagRepository {
       const result = await oracleConn.execute(
         `
         begin
-        xcxp_sca_controle_pkg.busca_dados_etiqueta_prc(:p_id_evento, :p_tp_controle, :p_nr_cpf_cnpj, :x_saida_json);
+        busca_dados_etiqueta_prc(:p_id_evento, :p_tp_controle, :p_nr_cpf_cnpj, :x_saida_json);
         end;
         `,
         {
@@ -388,12 +358,10 @@ export default class TagRepository {
             dir: oracledb.BIND_OUT,
             maxSize: 1000000,
           },
-        },
+        }
       );
 
-      this.logger.debug(
-        `getCooperadoSocioTag result: ${result.outBinds.x_saida_json}`,
-      );
+      this.logger.debug(`getCooperadoSocioTag result: ${result.outBinds.x_saida_json}`);
 
       return JSON.parse(result.outBinds.x_saida_json);
     } catch (error) {
@@ -404,9 +372,7 @@ export default class TagRepository {
           await oracleConn.close();
           this.logger.debug('getCooperadoSocioTag - Oracle connection closed.');
         } catch (err) {
-          this.logger.warn(
-            `getCooperadoSocioTag - Error closing Oracle connection: ${err}`,
-          );
+          this.logger.warn(`getCooperadoSocioTag - Error closing Oracle connection: ${err}`);
         }
       }
     }
@@ -421,7 +387,7 @@ export default class TagRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.listar_monitor_publico_prc(:p_id_evento, :x_saida_json);
+          listar_monitor_publico_prc(:p_id_evento, :x_saida_json);
         end;
         `,
         {
@@ -431,7 +397,7 @@ export default class TagRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
       this.logger.debug(`get monitor result: ${result.outBinds.x_saida_json}`);
@@ -458,7 +424,7 @@ export default class TagRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.emitir_segunda_via_coop_prc(:p_nr_cpf_cnpj, :p_id_evento, :p_nm_usuario, :x_saida_json);
+          emitir_segunda_via_coop_prc(:p_nr_cpf_cnpj, :p_id_evento, :p_nm_usuario, :x_saida_json);
         end;
         `,
         {
@@ -470,7 +436,7 @@ export default class TagRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
       this.logger.debug(`tag 2ª via: ${result.outBinds.x_saida_json}`);
@@ -478,13 +444,9 @@ export default class TagRepository {
       retorno = JSON.parse(result.outBinds.x_saida_json);
       if (retorno.cd_status == true) {
         retorno.ds_cooperado.forEach((cooperado) => {
-          cooperado.nr_cpf_cnpj_cooperado = Utils.getFormattedCpfCnpj(
-            cooperado.nr_cpf_cnpj_cooperado.trim(),
-          );
+          cooperado.nr_cpf_cnpj_cooperado = Utils.getFormattedCpfCnpj(cooperado.nr_cpf_cnpj_cooperado.trim());
           if (cooperado.nr_cpf_cnpj_representante) {
-            cooperado.nr_cpf_cnpj_representante = Utils.getFormattedCpfCnpj(
-              cooperado.nr_cpf_cnpj_representante.trim(),
-            );
+            cooperado.nr_cpf_cnpj_representante = Utils.getFormattedCpfCnpj(cooperado.nr_cpf_cnpj_representante.trim());
           }
         });
 
@@ -513,7 +475,7 @@ export default class TagRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.emitir_segunda_via_socio_prc(:p_nr_cpf_cnpj, :p_id_evento, :p_nm_usuario, :x_saida_json);
+          emitir_segunda_via_socio_prc(:p_nr_cpf_cnpj, :p_id_evento, :p_nm_usuario, :x_saida_json);
         end;
         `,
         {
@@ -525,7 +487,7 @@ export default class TagRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
       this.logger.debug(`put sócio result: ${result.outBinds.x_saida_json}`);
@@ -533,9 +495,7 @@ export default class TagRepository {
       retorno = JSON.parse(result.outBinds.x_saida_json);
       if (retorno.cd_status == true) {
         retorno.ds_socio.forEach((socio) => {
-          socio.nr_cpf_cnpj_socio = Utils.getFormattedCpfCnpj(
-            socio.nr_cpf_cnpj_socio.trim(),
-          );
+          socio.nr_cpf_cnpj_socio = Utils.getFormattedCpfCnpj(socio.nr_cpf_cnpj_socio.trim());
         });
 
         return retorno.ds_socio[0];
@@ -562,7 +522,7 @@ export default class TagRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.emitir_segunda_via_familiar_prc(:p_nr_cpf_cnpj, :p_id_evento, :p_nm_usuario, :x_saida_json);
+          emitir_segunda_via_familiar_prc(:p_nr_cpf_cnpj, :p_id_evento, :p_nm_usuario, :x_saida_json);
         end;
         `,
         {
@@ -574,7 +534,7 @@ export default class TagRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
       this.logger.debug(`put familiar result: ${result.outBinds.x_saida_json}`);
@@ -582,9 +542,7 @@ export default class TagRepository {
       retorno = JSON.parse(result.outBinds.x_saida_json);
       if (retorno.cd_status == true) {
         retorno.ds_familiar.forEach((familiar) => {
-          familiar.nr_cpf_cnpj_familiar = Utils.getFormattedCpfCnpj(
-            familiar.nr_cpf_cnpj_familiar.trim(),
-          );
+          familiar.nr_cpf_cnpj_familiar = Utils.getFormattedCpfCnpj(familiar.nr_cpf_cnpj_familiar.trim());
         });
 
         return retorno.ds_familiar[0];
@@ -605,17 +563,14 @@ export default class TagRepository {
     this.logger.debug('putVisitanteTagCopy... ');
 
     let oracleConn, retorno;
-    const cpfOrCnpjOnlyDigits = `${visitanteTagCopy.cpf_cnpj.replace(
-      /\D/g,
-      '',
-    )}`;
+    const cpfOrCnpjOnlyDigits = `${visitanteTagCopy.cpf_cnpj.replace(/\D/g, '')}`;
 
     try {
       oracleConn = await this.databaseService.openPoolConnection();
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.emitir_segunda_via_visi_prc(:p_nr_cpf_cnpj, :p_id_evento, :p_nm_usuario, :x_saida_json);
+          emitir_segunda_via_visi_prc(:p_nr_cpf_cnpj, :p_id_evento, :p_nm_usuario, :x_saida_json);
         end;
         `,
         {
@@ -627,19 +582,15 @@ export default class TagRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
-      this.logger.debug(
-        `put visitante result: ${result.outBinds.x_saida_json}`,
-      );
+      this.logger.debug(`put visitante result: ${result.outBinds.x_saida_json}`);
 
       retorno = JSON.parse(result.outBinds.x_saida_json);
       if (retorno.cd_status == true) {
         retorno.ds_visitante.forEach((visitante) => {
-          visitante.nr_cpf_cnpj = Utils.getFormattedCpfCnpj(
-            visitante.nr_cpf_cnpj.trim(),
-          );
+          visitante.nr_cpf_cnpj = Utils.getFormattedCpfCnpj(visitante.nr_cpf_cnpj.trim());
         });
 
         return retorno.ds_visitante[0];
@@ -664,7 +615,7 @@ export default class TagRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.relatorio_credenciamento_prc(:p_id_evento, :x_saida_json);
+          relatorio_credenciamento_prc(:p_id_evento, :x_saida_json);
         end;
         `,
         {
@@ -674,12 +625,10 @@ export default class TagRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 10000000,
           },
-        },
+        }
       );
 
-      this.logger.debug(
-        `tag relatório result: ${result.outBinds.x_saida_json}`,
-      );
+      this.logger.debug(`tag relatório result: ${result.outBinds.x_saida_json}`);
 
       return JSON.parse(result.outBinds.x_saida_json);
     } catch (err) {

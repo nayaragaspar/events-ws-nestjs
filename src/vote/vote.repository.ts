@@ -25,7 +25,7 @@ export default class VoteRepository {
       const result = await oracleConn.execute(
         `
           begin
-            xcxp_sca_controle_pkg.cadastrar_voto_prc(:p_id_evento, :p_id_assunto, :p_nr_cpf_cnpj, :p_cd_matricula, :p_nm_usuario, :x_retorno);
+            cadastrar_voto_prc(:p_id_evento, :p_id_assunto, :p_nr_cpf_cnpj, :p_cd_matricula, :p_nm_usuario, :x_retorno);
           end;
           `,
         {
@@ -39,7 +39,7 @@ export default class VoteRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
       this.logger.debug(`post vote result: ${result.outBinds.x_retorno}`);
@@ -64,7 +64,7 @@ export default class VoteRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.listar_monitor_votacao_prc(:p_id_evento, :x_retorno);
+          listar_monitor_votacao_prc(:p_id_evento, :x_retorno);
         end;
         `,
         {
@@ -74,12 +74,10 @@ export default class VoteRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 50000,
           },
-        },
+        }
       );
 
-      this.logger.debug(
-        `get vote monitor result: ${result.outBinds.x_retorno}`,
-      );
+      this.logger.debug(`get vote monitor result: ${result.outBinds.x_retorno}`);
 
       return JSON.parse(result.outBinds.x_retorno);
     } catch (err) {
@@ -107,7 +105,7 @@ export default class VoteRepository {
               on xsv.id_entrada_participante = xsep.id_entrada_participante
             where xsv.id_assunto = :id_assunto
               and xsep.nr_cpf_cnpj_participante = :cpf_cnpj`,
-        [subjectId, `${cpf_cnpj.replace(/\D/g, '')}`],
+        [subjectId, `${cpf_cnpj.replace(/\D/g, '')}`]
       );
       this.logger.debug(`getVotes: ${result.rows}`);
 
@@ -132,7 +130,7 @@ export default class VoteRepository {
       const result = await oracleConn.execute(
         `
           begin
-            xcxp_sca_controle_pkg.importar_planilha_votante_prc(:p_id_evento, :p_nr_cpf_cnpj, :p_cd_matricula, :p_nm_representante, 
+            importar_planilha_votante_prc(:p_id_evento, :p_nr_cpf_cnpj, :p_cd_matricula, :p_nm_representante, 
                                                                 :p_nr_cpf_cnpj_representante, :p_ds_justificativa, :p_nm_usuario_criacao, :x_retorno);
           end;
           `,
@@ -141,10 +139,7 @@ export default class VoteRepository {
           p_nr_cpf_cnpj: `${voter.nr_cpf_cnpj.replace(/\D/g, '')}`,
           p_cd_matricula: voter.cd_matricula,
           p_nm_representante: voter.nm_representante,
-          p_nr_cpf_cnpj_representante: `${voter.nr_cpf_cnpj_representante.replace(
-            /\D/g,
-            '',
-          )}`,
+          p_nr_cpf_cnpj_representante: `${voter.nr_cpf_cnpj_representante.replace(/\D/g, '')}`,
           p_ds_justificativa: voter.ds_justificativa,
           p_nm_usuario_criacao: username.trim(),
           x_retorno: {
@@ -152,7 +147,7 @@ export default class VoteRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 5000,
           },
-        },
+        }
       );
 
       this.logger.debug(`planilha vote result: ${result.outBinds.x_retorno}`);
@@ -177,7 +172,7 @@ export default class VoteRepository {
       const result = await oracleConn.execute(
         `
           begin
-            xcxp_sca_controle_pkg.inserir_votante_prc(:p_id_evento, :p_nr_cpf_cnpj, :p_cd_matricula, :p_nm_representante, 
+            inserir_votante_prc(:p_id_evento, :p_nr_cpf_cnpj, :p_cd_matricula, :p_nm_representante, 
                                                                 :p_nr_cpf_cnpj_representante, :p_ds_justificativa, :p_nm_usuario_criacao, :x_retorno);
           end;
           `,
@@ -186,10 +181,7 @@ export default class VoteRepository {
           p_nr_cpf_cnpj: `${voter.nr_cpf_cnpj.replace(/\D/g, '')}`,
           p_cd_matricula: voter.cd_matricula,
           p_nm_representante: voter.nm_representante,
-          p_nr_cpf_cnpj_representante: `${voter.nr_cpf_cnpj_representante.replace(
-            /\D/g,
-            '',
-          )}`,
+          p_nr_cpf_cnpj_representante: `${voter.nr_cpf_cnpj_representante.replace(/\D/g, '')}`,
           p_ds_justificativa: voter.ds_justificativa,
           p_nm_usuario_criacao: username.trim(),
           x_retorno: {
@@ -197,7 +189,7 @@ export default class VoteRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 5000,
           },
-        },
+        }
       );
 
       this.logger.debug(`post voter result: ${result.outBinds.x_retorno}`);
@@ -222,7 +214,7 @@ export default class VoteRepository {
       const result = await oracleConn.execute(
         `
           begin
-            xcxp_sca_controle_pkg.limpar_planilha_votante_prc(:p_id_evento, :x_retorno);
+            limpar_planilha_votante_prc(:p_id_evento, :x_retorno);
           end;
           `,
         {
@@ -232,7 +224,7 @@ export default class VoteRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 500,
           },
-        },
+        }
       );
 
       this.logger.debug(`delete planilha result: ${result.outBinds.x_retorno}`);
@@ -257,7 +249,7 @@ export default class VoteRepository {
       const result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.relatorio_inserir_votante_prc(:p_id_evento, :x_saida_json);
+          relatorio_inserir_votante_prc(:p_id_evento, :x_saida_json);
         end;
         `,
         {
@@ -267,12 +259,10 @@ export default class VoteRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 10000000,
           },
-        },
+        }
       );
 
-      this.logger.debug(
-        `getExceptionReport result: ${result.outBinds.x_saida_json}`,
-      );
+      this.logger.debug(`getExceptionReport result: ${result.outBinds.x_saida_json}`);
 
       return JSON.parse(result.outBinds.x_saida_json);
     } catch (err) {
@@ -294,7 +284,7 @@ export default class VoteRepository {
       result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.relatorio_votacao_prc(:p_id_evento, :p_id_assunto, :x_saida_json);
+          relatorio_votacao_prc(:p_id_evento, :p_id_assunto, :x_saida_json);
         end;
         `,
         {
@@ -305,11 +295,9 @@ export default class VoteRepository {
             type: oracledb.DB_TYPE_NVARCHAR,
             maxSize: 10000000,
           },
-        },
+        }
       );
-      this.logger.debug(
-        `getVoteReport result: ${result.outBinds.x_saida_json}`,
-      );
+      this.logger.debug(`getVoteReport result: ${result.outBinds.x_saida_json}`);
 
       return JSON.parse(result.outBinds.x_saida_json);
     } catch (err) {
@@ -331,7 +319,7 @@ export default class VoteRepository {
 
       result = await oracleConn.execute(
         `select max(a.dt_criacao) from xcxp_sca_cooperado_votante a where a.id_evento = :id`,
-        [eventId], // bind value for :id
+        [eventId] // bind value for :id
       );
       this.logger.debug(`lastUpload: ${result.rows}`);
 
@@ -356,7 +344,7 @@ export default class VoteRepository {
       result = await oracleConn.execute(
         `
         begin
-          xcxp_sca_controle_pkg.exportar_planilha_votante_prc(:p_id_evento, :x_dados_retorno);
+          exportar_planilha_votante_prc(:p_id_evento, :x_dados_retorno);
         end;
         `,
         {
@@ -365,7 +353,7 @@ export default class VoteRepository {
             dir: oracledb.BIND_OUT,
             type: oracledb.DB_TYPE_CURSOR,
           },
-        },
+        }
       );
 
       const rows = await result.outBinds.x_dados_retorno.getRows();
